@@ -6,8 +6,6 @@ package highway
 
 import (
 	"encoding/binary"
-
-	"github.com/intel-go/cpuid"
 )
 
 const (
@@ -21,8 +19,6 @@ var (
 	init0 = Lanes{0xdbe6d5d5fe4cce2f, 0xa4093822299f31d0, 0x13198a2e03707344, 0x243f6a8885a308d3}
 	init1 = Lanes{0x3bd39e10cb0ef593, 0xc0acf169b5f18a8c, 0xbe5466cf34e90c6c, 0x452821e638d01377}
 )
-
-var useSSE = cpuid.HasFeature(cpuid.SSE4_1)
 
 type state struct {
 	v0, v1     Lanes
@@ -131,7 +127,7 @@ func (s *state) PermuteAndUpdate() {
 
 func Hash(key Lanes, bytes []byte) uint64 {
 
-	if useSSE {
+	if useSSE() {
 		return hashSSE(&key, &init0, &init1, bytes)
 	}
 
