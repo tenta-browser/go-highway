@@ -1,3 +1,5 @@
+// +build amd64
+
 package highway
 
 //go:generate python -m peachpy.x86_64 sum.py -S -o highway_amd64.s -mabi=goasm
